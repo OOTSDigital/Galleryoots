@@ -1,0 +1,138 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+{% set centered = true %}
+
+{% set title = "OOTS Gallery" %} {# must have this, otherwise you will get an error #}
+
+{% set content %}
+
+{% set id_passed = craft.request.getSegment(3) %} <!-- Segment 3 of Url here means the id-->
+
+{% set ad = craft.galleryoots.getGalleryById(id_passed) %}
+
+ {% if ad|length %}
+
+    {% set selected_images_arr = ad.selected_images|split(',') %} <!-- array of selected images -->
+
+    <h2>Edit Gallery</h2>
+
+    <form method="post" action="" accept-charset="UTF-8" enctype="multipart/form-data">
+
+        <!-- select image to show on the gallery from all images available-->
+          <div class="gallery">
+              <!--//for every image in gallery-->
+             
+               {% set total = craft.galleryoots.getTotalFiles()  %} {# total files  #}
+
+              {#% for image in craft.assets.kind('image') %}
+                    <a><img src="{{ image.getUrl('thumbs') }}" alt="{{image.title}}"></a>
+                    <!-- if id is in the list of selected items --> 
+                    {% if image.id in selected_images_arr %}
+                       <input type="checkbox" name="selected_images[{{image.id}}]" value="{{image.id}}" checked>
+                    {% else %}
+                       <input type="checkbox" name="selected_images[{{image.id}}]" value="{{image.id}}">
+                    <!-- else output unchecked checkbox-->
+                    {% endif %}  
+              {% endfor % #}
+              <!--//end for loop-->  
+
+              {% for image in craft.galleryoots.getAllFilesToDisplay(ad.assets_folder_id) %} {# pass the id of the selected assets folder #}
+                  {% if image.kind == 'image' %}
+                        <a><img src="{{ image.getUrl('thumbs') }}" alt="{{image.title}}"></a>
+                        <!-- if id is in the list of selected items --> 
+                        {% if image.id in selected_images_arr %}
+                           <input type="checkbox" name="selected_images[{{image.id}}]" value="{{image.id}}" checked>
+                        {% else %}
+                           <input type="checkbox" name="selected_images[{{image.id}}]" value="{{image.id}}">
+                        <!-- else output unchecked checkbox-->
+                        {% endif %} 
+                  {% endif %}   
+              {% endfor %}
+
+
+          </div>
+
+        <!-- end select image to show -->
+        <input type="hidden" name="action" value="galleryoots/update" />
+        <input type="hidden" name="redirect" value="galleryoots/index" />
+        <input type="hidden" name="id" value="{{id_passed}}" /> <!-- pass id as hidden field here-->
+
+            <div class="form-group one half half-padded">
+                <label for="name" class="col-sm-2 control-label">Name <span class="req">*</span></label>
+              
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ad.name}}">
+                </div>
+            </div>
+
+             <div class="form-group one half half-padded">
+                <label for="assets_folder_id" class="col-sm-2 control-label">Assets Folder<span class="req">*</span></label>
+                <div class="col-sm-10">
+                  <!--input type="text" class="form-control" id="assets_folder_id" name="assets_folder_id" placeholder="Assets Folder Id"-->
+                    
+                    <select id="assets_folder_id" name="assets_folder_id" >
+                      {% set folders = craft.galleryoots.getAssetFolders %} <!-- used to find folder names for dropdown list-->
+                        {% for folder in folders %}
+                          {% if folder.id == ad.assets_folder_id %}
+                          <option value="{{folder.id}}">{{folder.name}}</option>
+                          {% endif %}  
+                      {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+               <div class="form-group one half half-padded">
+                <label for="transformation" class="col-sm-2 control-label">Transformation<span class="req">*</span></label>
+              
+                <div class="col-sm-10">
+                  <!--input type="text" class="form-control" id="transformation" name="transformation" placeholder="Transformation"-->
+                    <select id="transformation" name="transformation" >
+                      {% set transformations = craft.galleryoots.getTransformations %} <!-- used to find transformation names for dropdown list-->
+                        {% for transformation in transformations %}
+                          {% if transformation.handle == ad.transformation %}
+                          <option value="{{transformation.handle}}">{{transformation.name}}</option>
+                          {% endif %}
+                      {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group one half half-padded">
+                <label for="total_images" class="col-sm-2 control-label">Total Images<span class="req">*</span></label>
+              
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="total_images" name="total_images" value="{{ad.total_images}}" placeholder="Total Images">
+                </div>
+            </div>
+        
+            <div class="form-group one half half-padded">
+                  <label for="status" class="col-sm-2 control-label">Status <span class="req">*</span></label>
+                
+                  <div class="col-sm-10">
+                    
+                    <select id="status" name="status" >
+                        {% if ad.status == "active" %}
+                          <option value="active" selected >Active</option>
+                          <option value= "inActive">Inactive</option>
+                        {% else %} 
+                          <option value="active">Active</option> 
+                          <option value= "inActive" selected >Inactive</option>
+                        {% endif %}
+                    </select>
+                  </div>
+            </div>
+
+        <div class="buttons">
+            <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+        </div>
+
+    </form>
+{% else %}
+    <p> Sorry No Gallery to Update Selected</p>
+    <div class="buttons">
+        <a href="{{ url('galleryoots/index') }}" class="btn add icon">{{"View All Galleries"|t }}</a>
+    </div>
+
+{% endif %}
+
+{% endset %}

@@ -1,0 +1,95 @@
+{#
+ # media gallery template
+ # -----------------------
+ #
+ # This template gets loaded whenever a Media Gallery entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “_media_gallery”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://buildwithcraft.com/docs/routing
+ #}
+
+{% extends "_sidebar" %}
+{% block content %}
+
+
+<h1>{{ entry.title }}</h1> 
+
+{{ entry.body }}
+     
+<p id="linkToList" class="linkToList"><a href="#">All Galleries</a></p>
+<!-- loop through all galleries -->
+<div class="media-gallery">
+      {% set galleries = craft.galleryoots.getActiveGalleries %} <!--Only active galleries should be displayed -->
+      
+      {% for gallery in galleries %}
+
+        {% set folder_id = gallery.assets_folder_id %}
+        {% set total_images = gallery.total_images %}
+        {% set gallery_id = gallery.id %}
+        {# set this_transformation = gallery.transformation #}  
+
+        {% if gallery.selected_images == 'none' %} <!-- if selected images is not null -->
+      
+          {% set images = craft.assets.folderId(folder_id).limit(1).find() %}
+
+        {% else %}
+        
+          {% set images_to_show = gallery.selected_images %} <!--need to retain raw '' after venue: -->
+          {% set images = craft.assets.id(images_to_show).limit(1).find() %} <!--return array of selected images -->
+
+        
+        {% endif %} 
+
+        <div class="gallery-title" id="gallery1_{{gallery_id}}" data-name="{{gallery.name}}">
+          {% for image in images %}
+
+            <a href="{{image.getUrl('galleryFull')}}" class="gallery-item">
+              <img src="{{image.getUrl('galleryThumb')}}" id="{{loop.index}}" {# width="{{assets.getWidth(transform)}}" height="{{ assets.getHeight(transform) }}" #} alt="{{gallery.name}}" />
+              <span class="gallery-name"><b>{{gallery.name}}</b> <i class="fa fa-angle-right"></i></span>
+            </a>  
+
+          {% endfor %}
+        </div>
+      {% endfor %}
+</div>
+<!-- end loop through all galleries -->
+
+  {% set galleries = craft.galleryoots.getActiveGalleries %} 
+
+  {% for gallery in galleries %}
+
+        {% set folder_id = gallery.assets_folder_id %}
+
+        {% set total_images = gallery.total_images %}
+
+        {% set gallery_id = gallery.id %}
+
+        {% if gallery.selected_images == 'none' %} <!-- if selected images is not null -->
+          
+          {% set images = craft.assets.folderId(folder_id).limit(total_images).find() %}
+        
+        {% else %}
+
+           {% set images_to_show = gallery.selected_images %}
+
+           {% set images = craft.assets.id(images_to_show).find() %} <!--return array of selected images -->
+        
+        {% endif %}
+
+    <div class="single-gallery" id="gallery_{{gallery_id}}" data-name="{{gallery.name}}">
+        
+        {% for image in images %}
+
+          <a href="{{image.getUrl('galleryFull')}}" class="gallery-item">
+            <img src="{{image.getUrl('galleryThumb')}}" id="{{loop.index}}" alt="{{gallery.name}} {{loop.index}}"/>
+          </a>  
+        {% endfor %}
+    </div>
+  {% endfor %}
+
+{% endblock %}

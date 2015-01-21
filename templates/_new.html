@@ -1,0 +1,76 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+{% set centered = true %}
+{% set title = "OOTS Gallery" %} {# must have this, otherwise you will get an error #}
+{% set content %}
+
+    <h2>New Gallery Settings</h2>
+
+    <form method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+
+        <input type="hidden" name="action" value="galleryoots/add" />
+        <input type="hidden" name="redirect" value="galleryoots/index" /> <!-- redirect after saving gallery to editing it-->
+        
+            <div class="form-group one half half-padded">
+                <label for="name" class="col-sm-2 control-label">Name <span class="req">*</span></label>
+              
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                </div>
+            </div>
+
+             <div class="form-group one half half-padded">
+                <label for="assets_folder_id" class="col-sm-2 control-label">Assets Folder<span class="req">*</span></label>
+                <div class="col-sm-10">
+                  <!--input type="text" class="form-control" id="assets_folder_id" name="assets_folder_id" placeholder="Assets Folder Id"-->
+                    
+                    <select id="assets_folder_id" name="assets_folder_id" >
+                      {% set folders = craft.galleryoots.getAssetFolders %} <!-- used to find folder names for dropdown list-->
+                        {% for folder in folders %}
+                          <option value="{{folder.id}}">{{folder.name}}</option>
+                      {%endfor%}
+                    </select>
+                </div>
+            </div>
+
+               <div class="form-group one half half-padded">
+                <label for="transformation" class="col-sm-2 control-label">Transformation<span class="req">*</span></label>
+              
+                <div class="col-sm-10">
+                  <!--input type="text" class="form-control" id="transformation" name="transformation" placeholder="Transformation"-->
+                    <select id="transformation" name="transformation" >
+                      {% set transformations = craft.galleryoots.getTransformations %} <!-- used to find transformation names for dropdown list-->
+                        {% for transformation in transformations %}
+                          <option value="{{transformation.handle}}">{{transformation.name}}</option>
+                      {%endfor%}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group one half half-padded">
+                <label for="total_images" class="col-sm-2 control-label">Total Images<span class="req">*</span></label>
+              
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="total_images" name="total_images" placeholder="Total Images">
+                </div>
+            </div>
+        
+            <div class="form-group one half half-padded">
+                  <label for="status" class="col-sm-2 control-label">Status <span class="req">*</span></label>
+                
+                  <div class="col-sm-10">
+                    
+                    <select id="status" name="status" >
+                        <option value="active">Active</option>
+                        <option value= "inactive">Inactive</option>
+                      </select>
+                  </div>
+            </div>
+
+        <div class="buttons">
+            <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+        </div>
+
+    </form>
+
+{% endset %}

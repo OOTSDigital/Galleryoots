@@ -1,0 +1,144 @@
+{% extends "_layouts/cp" %}
+{% set centered = true %}
+
+{% set ads = craft.galleryoots.getAll %}
+
+{% set title = "List of All Galleries"|t %}
+{% set content %}
+
+    <p id="noAds"{% if ads|length %} class="hidden"{% endif %}>
+        {{ "No Gallery exist yet."|t }}
+    </p>
+
+    {% if ads|length %}
+
+        <table id="gallery" class="data">
+            <thead>
+                <th scope="col">{{ "ID"|t }}</th>
+                <th scope="col">{{ "Name"|t }}</th>
+                <th scope="col">{{ "Asset Folder Id"|t }}</th>
+                <th scope="col">{{ "Transformation"|t }}</th>
+                <th scope="col">{{ "Total Images"|t }}</th>
+                <th scope="col">{{ "Status"|t }}</th>
+                <th scope="col">{{ "Date Created"|t }}</th>
+            </thead>
+            <tbody>
+		
+                {% for ad in ads %}
+
+                    <tr data-id="{{ ad.id }}" data-name="{{ ad.name|t }}">
+			                <td> {{ ad.id }} </td>
+                      <td> {{ ad.name }}</td>
+                      <td> {{ ad.assets_folder_id }}</td>
+                      <td> {{ ad.transformation }}</td>
+                  	  <td> {{ ad.total_images }}</td>
+                      <td> {{ ad.status }}</td>
+                      <td> {{ ad.dateCreated | date("d-m-Y", "Australia/Sydney") }} </td>
+                      </form>
+
+                            {%set update_url = "galleryoots/edit/"~ad.id %}  <!--Concatenate here action & id -->
+                            {%set delete_url = "galleryoots/delete/"~ad.id %} 
+
+                        <td>
+                            <a  href="{{url(update_url) }}" type="submit" class="btn icon update_ad" data-id="{{ad.id}}">{{ "Edit"|t }}</a>
+                        </td>
+                        
+                        <td>
+                            <a  href="{{url(delete_url) }}" class="btn icon delete_ad" data-id="{{ad.id}}"> {{ "Delete"|t }} </a>
+                        </td>
+                  
+                    </tr>
+
+                {% endfor %}
+         
+            </tbody>
+        </table>
+
+    {% endif %}
+
+    <div class="buttons">
+        <a href="{{ url('galleryoots/new') }}" class="btn add icon">{{"Add New Gallery"|t }}</a>
+    </div>
+
+{% endset %}  
+
+{% set js %}
+
+$(".update_ad").click(function() {
+
+console.log("Clicked update.......");
+  
+var id = $(this).attr("data-id");
+var name = "Gallery Updated";
+
+console.log("This is value of ID.............");
+
+console.log(id);
+
+var jsObj = {"id":id, "name":name};
+
+ $.ajax({ 
+  type: 'POST', 
+  url: "{{siteUrl}}admin/galleryoots/edit/" + id, 
+  data: {'jsObj':jsObj},
+  
+  success: function(data1){
+      console.log("Gallery successfully Updated!");
+   },
+
+  error: function(data1){
+      console.log("Sorry Error,Gallery not Updated!");
+  }
+
+  }); 
+}); 
+
+{% endset %}
+
+{% set js_delete %}
+
+$(".delete_ad").click(function(event) {
+
+event.preventDefault(); /* prevent from submitting */
+
+/* are you sure you want to delete? */
+var r = confirm("Are you sure you want to delete this Gallery?");
+
+if(r == true){
+
+var id = $(this).attr("data-id");
+
+var dataString = 'id='+ $(this).attr("data-id");
+
+console.log(dataString);
+
+ $.ajax({ 
+  type: 'POST',
+
+  url: "{{siteUrl}}admin/galleryoots/delete/" + id,
+  
+  data: dataString,
+
+  cache: false,
+
+  success: function(data){
+      /* refresh page after deletion  */
+      window.location.reload(true);
+  },
+
+  error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+  }); 
+  
+}else{
+  
+}
+  
+}); 
+
+{% endset %}
+
+{% includeJs js %}
+{% includeJs js_delete %}

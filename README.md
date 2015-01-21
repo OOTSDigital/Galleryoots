@@ -1,6 +1,8 @@
-<b>This is a craft plugin for displaying image galleries.</b>
+<b>This is a craft CMS Image Gallery plugin.</b>
 
-How to use the plugin
+This Craft CMS Image Gallery plugin allows you to create as many galleries as you want.
+
+How to use the plugin?
 
 1. Upload the Craft CMS Image Gallery folder (galleryoots folder) to your craft/plugins/ folder
 

@@ -15,6 +15,7 @@ How to use the plugin
 
 6. Add reference to galleryoots javascript
 
+```
 <script>
      var total_galleries = {{craft.galleryoots.getActiveGalleriesNo}}; //number of active galleries in galleryoots plugin
 
@@ -29,5 +30,9 @@ How to use the plugin
 </script>
 
 <script type="text/javascript" src="{{siteUrl}}path/to/your/galleryoots.js"></script>
+```
 
 7. To Display Gallery on a page add Gallery layout like _media_gallery.html to your page layout
+
+
+

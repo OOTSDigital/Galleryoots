@@ -10,24 +10,24 @@ How to use the plugin
 
 4. Select newly created Gallery by clicking edit and add images
 
-5. Add Reference to jQuery (You need jQuery for the custom.js to work)
+5. Add Reference to jQuery (You need jQuery for the galleryoots.js to work)
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 6. Add reference to galleryoots javascript
 
-	 <script>
-            var total_galleries = {{craft.galleryoots.getActiveGalleriesNo}}; //number of active galleries in galleryoots plugin
+<script>
+     var total_galleries = {{craft.galleryoots.getActiveGalleriesNo}}; //number of active galleries in galleryoots plugin
 
-            var galleryActiveArray = [];
+     var galleryActiveArray = [];
 
-            {% for gallery in craft.galleryoots.getActiveGalleriesArray %}
+     {% for gallery in craft.galleryoots.getActiveGalleriesArray %}
 
-              galleryActiveArray.push({{gallery}});
+      galleryActiveArray.push({{gallery}});
 
-            {% endfor %}
+     {% endfor %}
 
-     </script>
+</script>
 
-     <script type="text/javascript" src="{{siteUrl}}path/to/your/custom.js"></script>
+<script type="text/javascript" src="{{siteUrl}}path/to/your/galleryoots.js"></script>
 
 7. To Display Gallery on a page add Gallery layout like _media_gallery.html to your page layout

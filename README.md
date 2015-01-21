@@ -15,7 +15,7 @@ How to use the plugin
 
 6. To Display Gallery on a page add Gallery layout like media_gallery.html to your page layout
 
-7. Add reference to galleryoots javascript
+7. Add reference to galleryoots javascript in your _layout.html
 
 ```
 <script>

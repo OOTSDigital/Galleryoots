@@ -1,4 +1,4 @@
-This is a craft plugin for displaying image galleries.
+<b>This is a craft plugin for displaying image galleries.</b>
 
 How to use the plugin
 

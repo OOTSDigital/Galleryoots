@@ -13,7 +13,9 @@ How to use the plugin
 5. Add Reference to jQuery (You need jQuery for the galleryoots.js to work)
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-6. Add reference to galleryoots javascript
+6. To Display Gallery on a page add Gallery layout like media_gallery.html to your page layout
+
+7. Add reference to galleryoots javascript
 
 ```
 <script>
@@ -31,8 +33,3 @@ How to use the plugin
 
 <script type="text/javascript" src="{{siteUrl}}path/to/your/galleryoots.js"></script>
 ```
-
-7. To Display Gallery on a page add Gallery layout like _media_gallery.html to your page layout
-
-
-

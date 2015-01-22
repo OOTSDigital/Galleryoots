@@ -36,3 +36,5 @@ How to use the plugin?
 <script type="text/javascript" src="{{siteUrl}}path/to/your/galleryoots.js"></script>
 ```
 To see a live example please visit http://www.snowymountains.com.au/media-gallery
+
+This is a Version 1.0

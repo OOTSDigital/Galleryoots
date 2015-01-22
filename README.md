@@ -37,4 +37,4 @@ How to use the plugin?
 ```
 To see a live example please visit http://www.snowymountains.com.au/media-gallery
 
-This is a Version 1.0
+This is Version 1.0

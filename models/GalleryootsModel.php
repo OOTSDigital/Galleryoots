@@ -1,6 +1,7 @@
 <?php
 namespace Craft;
 
+//Galleryoots model class
 class GalleryootsModel extends BaseModel
 {
 	protected function defineAttributes()

@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-//Galleryoots model class
+//Galleryoots model class defining all gallery attributes
 class GalleryootsModel extends BaseModel
 {
 	protected function defineAttributes()

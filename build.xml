@@ -1,7 +1,21 @@
 <?xml version="1.0"?>
    <project name="Galleryoots" default="info">
    
-   	<target name="info">
+   	<target name="info" depends="phpmd" >
       <echo>Galleryoots - Craft CMS Plugin</echo>
    </target>
+
+  <property environment="env"/>
+   <!-- PHP Mess Detector -->
+  <target name="phpmd" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
+    <exec executable="phpmd">
+      <arg path="${basedir}/application" />
+      <arg value="xml" />
+      <arg value="codesize,unusedcode,naming" />
+      <arg value="--reportfile" />
+      <arg value="${basedir}/build/logs/pmd.xml" />
+    </exec>
+ </target>
+
+
   </project>

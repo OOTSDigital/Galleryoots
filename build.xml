@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
    <project name="Galleryoots" default="info" basedir=".">
    
-   		<target name="info" depends="phpmd" >
+   		<target name="info" depends="phpcs" >
       		<echo>Galleryoots - Craft CMS Plugin</echo>
    		</target>
 

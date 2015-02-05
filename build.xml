@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+   <project name="Galleryoots" default="info">
+   
+   	<target name="info">
+      <echo>Galleryoots - Craft CMS Plugin</echo>
+   </target>
+  </project>

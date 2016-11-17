@@ -17,9 +17,9 @@
     <h2>Edit Gallery</h2>
 
     <form method="post" action="" accept-charset="UTF-8" enctype="multipart/form-data">
-        {{ if craft.config.enableCsrfProtection }}
+        {% if craft.config.enableCsrfProtection %}
         {{ getCsrfInput()}}
-        {{ endif }}
+        {% endif %}
         <!-- select image to show on the gallery from all images available-->
           <div class="gallery">
               <!--//for every image in gallery-->

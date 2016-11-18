@@ -7,7 +7,9 @@
     <h2>New Gallery Settings</h2>
 
     <form method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-
+        {% if craft.config.enableCsrfProtection %}
+        {{ getCsrfInput()}}
+        {% endif %}
         <input type="hidden" name="action" value="galleryoots/add" />
         <input type="hidden" name="redirect" value="galleryoots/index" /> <!-- redirect after saving gallery to editing it-->
         
